@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-facade-xml type="seed">
+
+    <moqui.screen.SubscreensItem subscreenName="main" screenLocation="component://webroot/screen/webroot.xml" subscreenLocation="component://buccwl/screen/main.xml"/>
+    <moqui.screen.SubscreensDefault screenLocation="component://webroot/screen/webroot.xml" defaultSeqId="1" conditionExpression="1==1" subscreenName="main"/>
+
+
+    <mantle.party.Party partyId="ORG_BUCCWL" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="北京住总科贸控股集团有限公司"/>
+        <mantle.party.PartyRole roleTypeId="OrgInternal"/>
+        <mantle.party.contact.ContactMech contactMechId="BuccwlTeln" contactMechTypeEnumId="CmtTelecomNumber">
+            <telecomNumber countryCode="86" areaCode="010" contactNumber="87217106"/>
+            <parties contactMechPurposeId="PhonePrimary" fromDate="1265184000000" extension="" allowSolicitation="Y"/>
+            <parties contactMechPurposeId="PhoneBilling" fromDate="1265184000000" extension="" allowSolicitation="N"/>
+        </mantle.party.contact.ContactMech>
+
+        <mantle.party.contact.ContactMech contactMechId="BuccwlAddr" contactMechTypeEnumId="CmtPostalAddress">
+            <postalAddress toName="经理办公室" attnName="" address1="北京市朝阳区广渠路18号世东国际大厦北塔20层" address2="" unitNumber=""
+                           city="北京" stateProvinceGeoId="CHN_11" countryGeoId="CHN" postalCode="100088" postalCodeExt=""
+                           telecomContactMechId="BuccwlTeln"/>
+            <parties contactMechPurposeId="PostalPrimary" fromDate="1265184000000"/>
+            <parties contactMechPurposeId="PostalBilling" fromDate="1265184000000"/>
+        </mantle.party.contact.ContactMech>
+    </mantle.party.Party>
+
+    <mantle.ledger.LedgerServices.initPartyAccountingConfiguration sourcePartyId="DefaultSettings" organizationPartyId="ORG_BUCCWL" baseCurrencyUomId="CNY"/>
+
+
+    <!--客户-->
+    <mantle.party.Party partyId="ORG_THYSSENKRUPP" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="蒂森克虏伯（中国）投资有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_DHGTGROUP" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="唐山东华钢铁企业集团有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_BRIGHTDAIRY" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="光明乳业股份有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_DULUX" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="多乐士"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_FONTERRA" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="恒天然合作集团"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_NATURE_CN" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="大自然家居（中国）有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_HAILIN" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="北京海林节能科技股份有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_NIPPONPAINT" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="立邦"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_SGXGL" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="首钢新钢联"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_NABEL" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="诺贝尔瓷砖"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_XXG" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="中国新兴（集团）总公司"/>
+        <mantle.party.PartyRole roleTypeId="Customer"/>
+        <mantle.party.PartyRole roleTypeId="Account"/>
+    </mantle.party.Party>
+
+
+    <!--供应商-->
+    <mantle.party.Party partyId="ORG_249" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="阿根廷249工厂"/>
+        <mantle.party.PartyRole roleTypeId="Supplier"/>
+    </mantle.party.Party>
+    <mantle.party.Party partyId="ORG_MENGNIU" partyTypeEnumId="PtyOrganization">
+        <mantle.party.Organization organizationName="内蒙古蒙牛乳业（集团）股份有限公司"/>
+        <mantle.party.PartyRole roleTypeId="Supplier"/>
+    </mantle.party.Party>
+
+    <!--仓库-->
+    <mantle.facility.Facility facilityId="BUCC_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="住总1号仓库" ownerPartyId="ORG_BUCCWL">
+        <locations locationTypeEnumId="FltPick" locationSeqId="01010101" areaId="01" aisleId="01" sectionId="01" levelId="01" positionId=""/>
+        <locations locationTypeEnumId="FltStaging" locationSeqId="01010201" areaId="01" aisleId="01" sectionId="02" levelId="01" positionId=""/>
+
+        <locations locationTypeEnumId="FltBulk" locationSeqId="01010102" areaId="01" aisleId="01" sectionId="01" levelId="02" positionId=""/>
+        <locations locationTypeEnumId="FltBulk" locationSeqId="01010202" areaId="01" aisleId="01" sectionId="02" levelId="02" positionId=""/>
+    </mantle.facility.Facility>
+
+    <mantle.facility.Facility facilityId="COLD_CHAIN_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="冷链第三方仓库"  ownerPartyId="ORG_BUCCWL"/>
+
+
+    <moqui.basic.Uom abbreviation="dayXm2" description="Square Meter X Day" uomId="OTH_dayXm2" uomTypeEnumId="UT_OTHER_MEASURE"/>
+
+
+    <mantle.product.category.ProductCategory productCategoryId="COLD_CHAIN" productCategoryTypeEnumId="PctCatalog" categoryName="冷链" description=""/>
+    <mantle.product.category.ProductCategory productCategoryId="MENGNIU_ICE_CREAM" productCategoryTypeEnumId="PctCatalog" categoryName="蒙牛冰激凌" description=""/>
+    <mantle.product.category.ProductCategory productCategoryId="YILI_ICE_CREAM" productCategoryTypeEnumId="PctCatalog" categoryName="伊犁冰激凌" description=""/>
+    <mantle.product.category.ProductCategory productCategoryId="FONTERRA_CREAM" productCategoryTypeEnumId="PctCatalog" categoryName="恒天然奶油" description=""/>
+    <mantle.product.category.ProductCategory productCategoryId="BAXY_ICE_CREAM" productCategoryTypeEnumId="PctCatalog" categoryName="八喜冰激凌" description=""/>
+    <mantle.product.category.ProductCategory productCategoryId="MEILUN_ICE_CREAM" productCategoryTypeEnumId="PctCatalog" categoryName="八喜冰激凌" description=""/>
+
+    <mantle.product.category.ProductCategoryRollup productCategoryId="MENGNIU_ICE_CREAM" parentProductCategoryId="COLD_CHAIN" fromDate="0" sequenceNum="1"/>
+    <mantle.product.category.ProductCategoryRollup productCategoryId="YILI_ICE_CREAM" parentProductCategoryId="COLD_CHAIN" fromDate="0" sequenceNum="2"/>
+    <mantle.product.category.ProductCategoryRollup productCategoryId="BAXY_ICE_CREAM" parentProductCategoryId="COLD_CHAIN" fromDate="0" sequenceNum="3"/>
+    <mantle.product.category.ProductCategoryRollup productCategoryId="FONTERRA_CREAM" parentProductCategoryId="COLD_CHAIN" fromDate="0" sequenceNum="4"/>
+    <mantle.product.category.ProductCategoryRollup productCategoryId="MEILUN_ICE_CREAM" parentProductCategoryId="COLD_CHAIN" fromDate="0" sequenceNum="5"/>
+
+
+    <mantle.product.Product productId="COLD_CHAIN_FACILITY" productTypeEnumId="PtFacilityUse" assetTypeEnumId="" assetClassEnumId="" chargeShipping="N" returnable="N" productName="冷链仓库租赁费" description="">
+        <prices productPriceId="COLD_CHAIN_FACILITY_L" pricePurposeEnumId="PppPurchase" priceTypeEnumId="PptList"  fromDate="1265184000000"
+                minQuantity="1" price="19.99" priceUomId="CNY" ammountUomId="OTH_dayXm2"/>
+    </mantle.product.Product>
+
+    <mantle.product.Product productId="ARGENTINA_BEEF" productTypeEnumId="PtAsset" assetTypeEnumId="AstTpInventory" assetClassEnumId="AsClsInventoryFin"
+                            chargeShipping="Y" returnable="Y" productName="阿根廷牛肉" description="">
+        <prices productPriceId="ARGENTINA_BEEF_L" pricePurposeEnumId="PppPurchase" priceTypeEnumId="PptList"  fromDate="1265184000000"
+                minQuantity="1" price="19.99" priceUomId="USD" ammountUomId="WT_mt"/>
+    </mantle.product.Product>
+
+    <mantle.product.Product productId="MENGNIU_DLSX" productTypeEnumId="PtAsset" assetTypeEnumId="AstTpInventory" assetClassEnumId="AsClsInventoryFin"
+                            chargeShipping="Y" returnable="Y" productName="蒂兰圣雪绚彩脆皮冰淇淋55g×6支" description="">
+        <prices productPriceId="MENGNIU_DLSX_L" pricePurposeEnumId="PppPurchase" priceTypeEnumId="PptList"  fromDate="1265184000000"
+                minQuantity="1" price="36.80" priceUomId="CNY" ammountUomId=""/>
+        <categories productCategoryId="MENGNIU_ICE_CREAM" fromDate="1265184000000" sequenceNum="1"/>
+    </mantle.product.Product>
+
+    <mantle.product.Product productId="MI_AIR13" productTypeEnumId="PtAsset" assetTypeEnumId="AstTpInventory" assetClassEnumId="AsClsInventoryFin"
+                            chargeShipping="Y" returnable="Y" productName="小米(MI)Air 13.3英寸全金属超轻薄笔记本电脑" description="">
+        <prices productPriceId="MI_AIR13_L" pricePurposeEnumId="PppPurchase" priceTypeEnumId="PptList"  fromDate="1265184000000"
+                minQuantity="1" price="5499.00" priceUomId="CNY" ammountUomId=""/>
+    </mantle.product.Product>
+
+</entity-facade-xml>
