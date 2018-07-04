@@ -1,5 +1,16 @@
-<#--https://bootsnipp.com/snippets/oPWaZ-->
+<#--
+This software is in the public domain under CC0 1.0 Universal plus a
+Grant of Patent License.
 
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide. This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software (see the LICENSE.md file). If not, see
+<http://creativecommons.org/publicdomain/zero/1.0/>.
+-->
 <style>
     :focus {
         outline: none;
@@ -336,10 +347,10 @@
             /*display: inline-block !important;*/
         }
 
-      /*  @media (min-width: 768px)
-            .navbar-toggle {
-                display: block !important;
-            }*/
+        /*  @media (min-width: 768px)
+              .navbar-toggle {
+                  display: block !important;
+              }*/
 
         /* Search */
         #search .panel-body .navbar-form {
@@ -360,31 +371,7 @@
         }
     }
 </style>
-
-<script>
-    $(function () {
-        $('.navbar-toggle').click(function () {
-            $('.navbar-nav').toggleClass('slide-in');
-            $('.side-body').toggleClass('body-slide-in');
-//            $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
-            /// uncomment code for absolute positioning tweek see top comment in css
-            //$('.absolute-wrapper').toggleClass('slide-in');
-
-        });
-
-        // Remove menu for searching
-        /*$('#search-trigger').click(function () {
-            $('.navbar-nav').removeClass('slide-in');
-            $('.side-body').removeClass('body-slide-in');
-
-            /// uncomment code for absolute positioning tweek see top comment in css
-            //$('.absolute-wrapper').removeClass('slide-in');
-
-        });*/
-    });
-</script>
-<div id="apps-root">
+<div id="apps-root"><#-- NOTE: webrootVue component attaches here, uses this and below for template -->
     <input type="hidden" id="confMoquiSessionToken" value="${ec.web.sessionToken}">
     <input type="hidden" id="confAppHost" value="${ec.web.getHostName(true)}">
     <input type="hidden" id="confAppRootPath" value="${ec.web.servletContext.contextPath}">
@@ -392,27 +379,80 @@
     <input type="hidden" id="confLinkBasePath" value="${ec.web.servletContext.contextPath}/main">
     <input type="hidden" id="confUserId" value="${ec.user.userId!''}">
     <input type="hidden" id="confLocale" value="${ec.user.locale.toLanguageTag()}">
-    <#assign navbarCompList = sri.getThemeValues("STRT_HEADER_NAVBAR_COMP")>
-    <#list navbarCompList! as navbarCompUrl><input type="hidden" class="confNavPluginUrl" value="${navbarCompUrl}"></#list>
-    <#if hideNav! != 'true'>
+<#assign navbarCompList = sri.getThemeValues("STRT_HEADER_NAVBAR_COMP")>
+<#list navbarCompList! as navbarCompUrl><input type="hidden" class="confNavPluginUrl" value="${navbarCompUrl}"></#list>
+<#if hideNav! != 'true'>
+    <div id="top"><nav class="navbar navbar-inverse"><#--  navbar-fixed-top navbar-static-top --><div class="container-fluid">
+    <#-- Brand and toggle get grouped for better mobile display -->
+        <header class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <#assign headerLogoList = sri.getThemeValues("STRT_HEADER_LOGO")>
+            <#if headerLogoList?has_content><m-link href="/apps" class="navbar-brand"><img src="${sri.buildUrl(headerLogoList?first).getUrl()}" alt="Home"></m-link></#if>
+            <#assign headerTitleList = sri.getThemeValues("STRT_HEADER_TITLE")>
+            <#if headerTitleList?has_content><div class="navbar-brand">${ec.resource.expand(headerTitleList?first, "")}</div></#if>
+        </header>
+        <div id="navbar-buttons" class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul id="dynamic-menus" class="nav navbar-nav">
+                <li v-for="(navMenuItem, menuIndex) in navMenuList" class="dropdown">
+                    <template v-if="menuIndex < (navMenuList.length - 1)">
+                        <m-link :href="getNavHref(menuIndex)">{{navMenuItem.title}} <i class="glyphicon glyphicon-chevron-right"></i></m-link>
+                    </template>
+                </li>
+            </ul>
+            <template v-if="navMenuList.length > 0"><m-link class="navbar-text" :href="getNavHref(navMenuList.length - 1)">{{navMenuList[navMenuList.length - 1].title}}</m-link></template>
+        <#-- logout button -->
+            <a href="${sri.buildUrl("/Login/logout").url}" data-toggle="tooltip" data-original-title="Logout ${(ec.user.userAccount.userFullName)!''}" data-placement="bottom" class="btn btn-danger btn-sm navbar-btn navbar-right"><i class="glyphicon glyphicon-off"></i></a>
+        <#-- screen history menu -->
+        <#-- get initial history from server? <#assign screenHistoryList = ec.web.getScreenHistory()><#list screenHistoryList as screenHistory><#if (screenHistory_index >= 25)><#break></#if>{url:pathWithParams, name:title}</#list> -->
+            <div id="history-menu" class="nav navbar-right dropdown">
+                <a id="history-menu-link" href="#" class="dropdown-toggle btn btn-default btn-sm navbar-btn" data-toggle="dropdown" title="History">
+                    <i class="glyphicon glyphicon-list"></i></a>
+                <ul class="dropdown-menu">
+                    <li v-for="histItem in navHistoryList"><m-link :href="histItem.pathWithParams">
+                        <template v-if="histItem.image">
+                            <i v-if="histItem.imageType === 'icon'" :class="histItem.image" style="padding-right: 8px;"></i>
+                            <img v-else :src="histItem.image" :alt="histItem.title" width="18" style="padding-right: 4px;">
+                        </template>
+                        <i v-else class="glyphicon glyphicon-link" style="padding-right: 8px;"></i>
+                        {{histItem.title}}</m-link></li>
+                </ul>
+            </div>
+        <#-- screen history previous screen -->
+            <a href="#" @click.prevent="goPreviousScreen()" data-toggle="tooltip" data-original-title="Previous Screen" data-placement="bottom" class="btn btn-default btn-sm navbar-btn navbar-right"><i class="glyphicon glyphicon-step-backward"></i></a>
+        <#-- notify history -->
+            <div id="notify-history-menu" class="nav navbar-right dropdown">
+                <a id="notify-history-menu-link" href="#" class="dropdown-toggle btn btn-default btn-sm navbar-btn" data-toggle="dropdown" title="Notifications">
+                    <i class="glyphicon glyphicon-exclamation-sign"></i></a>
+                <ul class="dropdown-menu" @click.prevent="stopProp">
+                    <li v-for="histItem in notifyHistoryList">
+                        <div :class="'alert alert-' + histItem.type" @click.prevent="stopProp" role="alert"><strong>{{histItem.time}}</strong> <span v-html="histItem.message"></span></div>
+                    </li>
+                </ul>
+            </div>
+        <#-- screen documentation/help -->
+            <div v-if="navMenuList.length > 0 && navMenuList[navMenuList.length - 1].screenDocList.length" id="document-menu" class="nav navbar-right dropdown">
+                <a id="document-menu-link" href="#" class="dropdown-toggle btn btn-info btn-sm navbar-btn" data-toggle="dropdown" title="Documentation">
+                    <i class="glyphicon glyphicon-question-sign"></i></a>
+                <ul class="dropdown-menu">
+                    <li v-for="screenDoc in navMenuList[navMenuList.length - 1].screenDocList">
+                        <a href="#" @click.prevent="showScreenDocDialog(screenDoc.index)">{{screenDoc.title}}</a></li>
+                </ul>
+            </div>
+        <#-- dark/light switch -->
+            <a href="#" @click.prevent="switchDarkLight()" data-toggle="tooltip" data-original-title="Switch Dark/Light" data-placement="bottom" class="btn btn-default btn-sm navbar-btn navbar-right"><i class="glyphicon glyphicon-adjust"></i></a>
 
-
-
-
-    </#if>
-
-    <#--<div id="content"><div class="inner"><div class="container-fluid">
-        <subscreens-active></subscreens-active>
-    </div></div></div>
--->
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li v-for="(navMenuItem, menuIndex) in navMenuList" class="breadcrumb-item"><a :href="getLinkPath(getNavHref(menuIndex))">{{navMenuItem.title}}</a></li>
-
-        </ol>
-    </nav>
-
+        <#-- nav plugins -->
+            <template v-for="navPlugin in navPlugins"><component :is="navPlugin"></component></template>
+        <#-- spinner, usually hidden -->
+            <div class="navbar-right" style="padding:8px;" :class="{ hidden: loading < 1 }"><div class="spinner small"><div>Loading…</div></div></div>
+        </div>
+    </div></nav></div>
+</#if>
     <div class="row">
         <!-- uncomment code for absolute positioning tweek see top comment in css -->
         <!-- <div class="absolute-wrapper"> </div> -->
@@ -420,15 +460,15 @@
         <div class="side-menu">
 
             <nav class="navbar navbar-default" role="navigation">
-                <#--<ul id="dynamic-menus" class="nav navbar-nav">
-                    <li v-for="(navMenuItem, menuIndex) in navMenuList" class="dropdown">
-                        <template v-if="menuIndex < (navMenuList.length - 1)">
-                            <m-link :href="getNavHref(menuIndex)">{{navMenuItem.title}} <i class="glyphicon glyphicon-chevron-right"></i></m-link>
-                        </template>
-                    </li>
-                </ul>
+            <#--<ul id="dynamic-menus" class="nav navbar-nav">
+                <li v-for="(navMenuItem, menuIndex) in navMenuList" class="dropdown">
+                    <template v-if="menuIndex < (navMenuList.length - 1)">
+                        <m-link :href="getNavHref(menuIndex)">{{navMenuItem.title}} <i class="glyphicon glyphicon-chevron-right"></i></m-link>
+                    </template>
+                </li>
+            </ul>
 
-                <template v-if="navMenuList.length > 0"><m-link class="navbar-text" :href="getNavHref(navMenuList.length - 1)">{{navMenuList[navMenuList.length - 1].title}}</m-link></template>
+            <template v-if="navMenuList.length > 0"><m-link class="navbar-text" :href="getNavHref(navMenuList.length - 1)">{{navMenuList[navMenuList.length - 1].title}}</m-link></template>
 -->
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -442,28 +482,28 @@
                         </button>
 
                         <!-- Brand -->
-                        <div class="brand-name-wrapper">
-                            <a class="navbar-brand" href="#">
-                                Brand
-                            </a>
-                        </div>
-
+                    <#--<div class="brand-name-wrapper">
+                        <a class="navbar-brand" href="#">
+                            Brand
+                        </a>
+                    </div>
+-->
                         <!-- Search -->
-                       <#-- <a data-toggle="collapse" href="#search" class="btn btn-default" id="search-trigger">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </a>-->
+                    <#-- <a data-toggle="collapse" href="#search" class="btn btn-default" id="search-trigger">
+                         <span class="glyphicon glyphicon-search"></span>
+                     </a>-->
 
                         <!-- Search body -->
-                       <#-- <div id="search" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <form class="navbar-form" role="search">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search">
-                                    </div>
-                                    <button type="submit" class="btn btn-default "><span class="glyphicon glyphicon-ok"></span></button>
-                                </form>
-                            </div>
-                        </div>-->
+                    <#-- <div id="search" class="panel-collapse collapse">
+                         <div class="panel-body">
+                             <form class="navbar-form" role="search">
+                                 <div class="form-group">
+                                     <input type="text" class="form-control" placeholder="Search">
+                                 </div>
+                                 <button type="submit" class="btn btn-default "><span class="glyphicon glyphicon-ok"></span></button>
+                             </form>
+                         </div>
+                     </div>-->
                     </div>
 
                 </div>
@@ -473,50 +513,50 @@
                     <ul class="nav navbar-nav">
 
 
-                        <#--<li v-for="subscreen in navMenuList[0].subscreens" :class="{active:subscreen.active}"><m-link :href="getLinkPath(subscreen.pathWithParams)"><span :class="subscreen.image"></span>{{subscreen.title}}</m-link> </li>-->
+                    <#--<li v-for="subscreen in navMenuList[0].subscreens" :class="{active:subscreen.active}"><m-link :href="getLinkPath(subscreen.pathWithParams)"><span :class="subscreen.image"></span>{{subscreen.title}}</m-link> </li>-->
 
 
                         <!-- Dropdown-->
                         <template v-for="subscreen in navMenuList[0].subscreens">
                         <#--<li class="panel panel-default" :id="subscreen.name">-->
-                        <li :id="subscreen.name" :class="{active:subscreen.active}">
-                            <a data-toggle="collapse" :href="'#' +subscreen.name + '-lvl1'">
-                            <#--<a  :href="getLinkPath(subscreen.pathWithParams)">-->
-                                <span :class="subscreen.image"></span>{{subscreen.title}}<span class="caret"></span>
-                            </a>
+                            <li :id="subscreen.name" :class="{active:subscreen.active}">
+                                <a data-toggle="collapse" :href="'#' +subscreen.name + '-lvl1'">
+                                <#--<a  :href="getLinkPath(subscreen.pathWithParams)">-->
+                                    <span :class="subscreen.image"></span>{{subscreen.title}}<span class="caret"></span>
+                                </a>
 
-                            <!-- Dropdown level 1 -->
-                            <div :id="subscreen.name + '-lvl1'" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ul class="nav navbar-nav">
+                                <!-- Dropdown level 1 -->
+                                <div :id="subscreen.name + '-lvl1'" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
 
-                                        <template v-for="subscreen in navMenuList[1].subscreens">
-                                            <li>
-                                                <m-link :href="getLinkPath(subscreen.pathWithParams)"  data-toggle="dropdown">{{subscreen.title}}</m-link>
-                                            </li>
+                                            <template v-for="subscreen in navMenuList[1].subscreens">
+                                                <li>
+                                                    <m-link :href="getLinkPath(subscreen.pathWithParams)"  data-toggle="dropdown">{{subscreen.title}}</m-link>
+                                                </li>
 
-                                        </template>
-                                        <!-- Dropdown level 2 -->
-                                        <li class="panel panel-default" :id="subscreen.name">
-                                            <a data-toggle="collapse" :href="'#' + subscreen.name + '-lvl2'">
-                                                <span class="glyphicon glyphicon-off"></span> Sub Level <span class="caret"></span>
-                                            </a>
-                                            <div :id="subscreen.name+'-lvl2'" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <ul class="nav navbar-nav">
-                                                        <li><a href="#">Link</a></li>
-                                                        <li><a href="#">Link</a></li>
-                                                        <li><a href="#">Link</a></li>
-                                                    </ul>
+                                            </template>
+                                            <!-- Dropdown level 2 -->
+                                            <li class="panel panel-default" :id="subscreen.name">
+                                                <a data-toggle="collapse" :href="'#' + subscreen.name + '-lvl2'">
+                                                    <span class="glyphicon glyphicon-off"></span> Sub Level <span class="caret"></span>
+                                                </a>
+                                                <div :id="subscreen.name+'-lvl2'" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <ul class="nav navbar-nav">
+                                                            <li><a href="#">Link</a></li>
+                                                            <li><a href="#">Link</a></li>
+                                                            <li><a href="#">Link</a></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
                         </template>
-                        <#--<li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>-->
+                    <#--<li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>-->
 
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -531,7 +571,7 @@
             </div>
         </div>
     </div>
-   <#-- <#if hideNav! != 'true'>
+<#if hideNav! != 'true'>
     <div id="footer" class="bg-dark">
         <#assign footerItemList = sri.getThemeValues("STRT_FOOTER_ITEM")>
         <div id="apps-footer-content">
@@ -541,7 +581,7 @@
             </#list>
         </div>
     </div>
-    </#if>-->
+</#if>
 </div>
 
 <div id="screen-document-dialog" class="modal dynamic-dialog" aria-hidden="true" style="display: none;" tabindex="-1">
