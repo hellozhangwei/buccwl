@@ -1,16 +1,4 @@
-<#--
-This software is in the public domain under CC0 1.0 Universal plus a
-Grant of Patent License.
-
-To the extent possible under law, the author(s) have dedicated all
-copyright and related and neighboring rights to this software to the
-public domain worldwide. This software is distributed without any
-warranty.
-
-You should have received a copy of the CC0 Public Domain Dedication
-along with this software (see the LICENSE.md file). If not, see
-<http://creativecommons.org/publicdomain/zero/1.0/>.
--->
+<#--https://bootsnipp.com/snippets/featured/admin-side-menu-->
 <style>
     :focus {
         outline: none;
@@ -49,6 +37,7 @@ along with this software (see the LICENSE.md file). If not, see
         height: 100%;
         background-color: #f8f8f8;
         border-right: 1px solid #e7e7e7;
+        overflow-y: auto;
     }
     .side-menu .navbar {
         border: none;
