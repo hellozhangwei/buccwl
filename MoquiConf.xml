@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<moqui-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/moqui-conf-2.1.xsd">
+
+   <webapp-list>
+        <webapp name="webroot">
+            <after-login><actions><log level="info" message="========================== after-login actions"/></actions></after-login>
+        </webapp>
+   </webapp-list>
+
+    <screen-facade>
+        <screen location="component://webroot/screen/webroot/apps.xml" default-subscreen="Buccwl">
+            <subscreens-item name="Buccwl" menu-title="住总科贸" menu-index="100"
+                             location="component://buccwl/screen/Buccwl.xml"/>
+        </screen>
+    </screen-facade>
+</moqui-conf>

@@ -2,10 +2,6 @@
 
 <entity-facade-xml type="seed">
 
-    <moqui.screen.SubscreensItem subscreenName="main" screenLocation="component://webroot/screen/webroot.xml" subscreenLocation="component://buccwl/screen/main.xml"/>
-    <moqui.screen.SubscreensDefault screenLocation="component://webroot/screen/webroot.xml" defaultSeqId="1" conditionExpression="1==1" subscreenName="main"/>
-
-
     <mantle.party.Party partyId="ORG_BUCCWL" partyTypeEnumId="PtyOrganization">
         <mantle.party.Organization organizationName="北京住总科贸控股集团有限公司"/>
         <mantle.party.PartyRole roleTypeId="OrgInternal"/>
@@ -104,8 +100,29 @@
         <locations locationTypeEnumId="FltBulk" locationSeqId="01010202" areaId="01" aisleId="01" sectionId="02" levelId="02" positionId=""/>
     </mantle.facility.Facility>
 
-    <mantle.facility.Facility facilityId="COLD_CHAIN_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="冷链第三方仓库"  ownerPartyId="ORG_BUCCWL"/>
+    <mantle.facility.Facility facilityId="COLD_CHAIN_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="冷链仓库1"  ownerPartyId="ORG_BUCCWL"/>
+    <mantle.facility.Facility facilityId="COLD_CHAIN_WH2" facilityTypeEnumId="FcTpWarehouse" facilityName="冷链仓库2"  ownerPartyId="ORG_BUCCWL"/>
+    <mantle.facility.Facility facilityId="FOREIGN_TRADE_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="外贸仓库1"  ownerPartyId="ORG_BUCCWL"/>
+    <mantle.facility.Facility facilityId="DOMESTIC_TRADE_WH1" facilityTypeEnumId="FcTpWarehouse" facilityName="内贸仓库1"  ownerPartyId="ORG_BUCCWL"/>
 
+
+    <mantle.product.store.ProductStore productStoreId="COLD_CHAIN_STORE" storeName="冷链业务"
+                                       organizationPartyId="ORG_BUCCWL" inventoryFacilityId="COLD_CHAIN_WH1"
+                                       reservationOrderEnumId="AsResOrdFifoRec" requirementMethodEnumId=""
+                                       defaultLocale="zh_CN" defaultCurrencyUomId="CNY" taxGatewayConfigId="LOCAL"/>
+
+    <mantle.product.store.ProductStore productStoreId="FOREIGN_TRADE_STORE" storeName="外贸业务"
+                                       organizationPartyId="ORG_BUCCWL" inventoryFacilityId="FOREIGN_TRADE_WH1"
+                                       reservationOrderEnumId="AsResOrdFifoRec" requirementMethodEnumId=""
+                                       defaultLocale="zh_CN" defaultCurrencyUomId="CNY" taxGatewayConfigId="LOCAL"/>
+
+    <mantle.product.store.ProductStore productStoreId="DOMESTIC_STORE" storeName="内贸业务"
+                                       organizationPartyId="ORG_BUCCWL" inventoryFacilityId="DOMESTIC_TRADE_WH1"
+                                       reservationOrderEnumId="AsResOrdFifoRec" requirementMethodEnumId=""
+                                       defaultLocale="zh_CN" defaultCurrencyUomId="CNY" taxGatewayConfigId="LOCAL"/>
+
+    <mantle.product.store.ProductStoreFacility productStoreId="COLD_CHAIN_STORE" facilityId="COLD_CHAIN_WH1" fromDate="0" sequenceNum="1"/>
+    <mantle.product.store.ProductStoreFacility productStoreId="COLD_CHAIN_STORE" facilityId="COLD_CHAIN_WH2" fromDate="0" sequenceNum="1"/>
 
     <moqui.basic.Uom abbreviation="dayXm2" description="Square Meter X Day" uomId="OTH_dayXm2" uomTypeEnumId="UT_OTHER_MEASURE"/>
 
