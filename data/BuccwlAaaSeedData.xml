@@ -2,6 +2,14 @@
 
 <entity-facade-xml type="seed">
 
+    <!-- Artifact group for all of the Buccwl application via the BuccwlApp screen (the root screen for the app) -->
+    <moqui.security.ArtifactGroup artifactGroupId="BUCCWL_APP" description="Buccwl App (via root screen)"/>
+    <moqui.security.ArtifactGroupMember artifactGroupId="BUCCWL_APP" artifactTypeEnumId="AT_XML_SCREEN"
+                                        inheritAuthz="Y" artifactName="component://buccwl/screen/BuccwlApp.xml"/>
+    <!-- Full permissions for the ADMIN user group -->
+    <moqui.security.ArtifactAuthz artifactAuthzId="BUCCWL_AUTHZ_ALL" userGroupId="ADMIN" artifactGroupId="BUCCWL_APP"
+                                  authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+    
     <mantle.party.Party partyId="ORG_BUCCWL" partyTypeEnumId="PtyOrganization">
         <mantle.party.Organization organizationName="北京住总科贸控股集团有限公司"/>
         <mantle.party.PartyRole roleTypeId="OrgInternal"/>

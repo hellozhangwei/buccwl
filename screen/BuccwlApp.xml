@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+        include-child-content="true" require-authentication="false" menu-image="glyphicon glyphicon-flash" menu-image-type="icon">
+
+    <actions>
+        <entity-find entity-name="mantle.product.store.ProductStoreParty" list="productStoreList">
+            <econdition field-name="partyId" from="ec.user.userAccount.partyId"/>
+        </entity-find>
+        <script>
+            ec.user.context.productStoreIds = productStoreList?.productStoreId
+        </script>
+        <log level="info" message="=============ec.user.context.productStoreIds==${ec.user.context.productStoreIds}==========="/>
+    </actions>
+
+    <widgets>
+        <label text="buccwl"/>
+    </widgets>
+</screen>
